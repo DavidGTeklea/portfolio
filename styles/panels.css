@@ -1,0 +1,77 @@
+.panel {
+  position: fixed;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%) translateX(1rem);
+  width: min(400px, 90vw);
+  max-height: min(80vh, 600px);
+  overflow-y: auto;
+  padding: 1.5rem;
+  background: rgba(20, 24, 20, 0.82);
+  backdrop-filter: blur(8px);
+  color: #f4f4f0;
+  border-radius: 12px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.panel.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(-50%) translateX(0);
+}
+
+.panel__close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: #f4f4f0;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.panel h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1.3rem;
+}
+
+.panel__subtitle {
+  margin: 0 0 0.75rem;
+  color: #b7c9b3;
+  font-size: 0.95rem;
+}
+
+.panel p {
+  margin: 0 0 1rem;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.panel__bullets {
+  margin: 0 0 1rem;
+  padding-left: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.panel__links {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.panel__links a {
+  color: #ffd166;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.panel__links a:hover {
+  text-decoration: underline;
+}

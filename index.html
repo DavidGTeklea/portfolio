@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>David Teklea</title>
+    <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="stylesheet" href="/styles/panels.css" />
+    <link rel="stylesheet" href="/styles/resume.css" />
+  </head>
+  <body>
+    <canvas id="scene"></canvas>
+    <div id="loading" class="loading">
+      <div class="loading__label">Loading the islands&hellip;</div>
+      <div class="loading__track"><div id="loading-bar" class="loading__bar"></div></div>
+    </div>
+    <div id="panel" class="panel">
+      <button class="panel__close" aria-label="Close">&times;</button>
+      <h2 id="panel-title"></h2>
+      <p id="panel-subtitle" class="panel__subtitle"></p>
+      <p id="panel-body"></p>
+      <ul id="panel-bullets" class="panel__bullets"></ul>
+      <div id="panel-links" class="panel__links"></div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

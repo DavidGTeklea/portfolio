@@ -1,0 +1,76 @@
+.resume {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+  background: #fdfdfb;
+  color: #23261f;
+  line-height: 1.55;
+}
+
+html:has(.resume),
+body:has(.resume) {
+  overflow: auto;
+  height: auto;
+  background: #fdfdfb;
+}
+
+.resume__header h1 {
+  font-size: 1.8rem;
+  margin-bottom: 0.25rem;
+}
+
+.resume__subtitle {
+  color: #5a6b52;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.resume__header > p:not(.resume__subtitle) {
+  margin-bottom: 1rem;
+}
+
+.resume__links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.resume__links a {
+  color: #b5750f;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.resume__links a:hover {
+  text-decoration: underline;
+}
+
+.resume__section {
+  margin-top: 2rem;
+}
+
+.resume__section > h2 {
+  font-size: 1.2rem;
+  border-bottom: 2px solid #63a46c;
+  padding-bottom: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.resume__entry {
+  margin-bottom: 1.5rem;
+}
+
+.resume__entry h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.15rem;
+}
+
+.resume__entry ul {
+  padding-left: 1.2rem;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.95rem;
+}
