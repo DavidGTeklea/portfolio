@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 // A straight walkable plank between two world points at a given height —
 // rotated so its long (local Z) axis points from `from` toward `to`.
-export function createBridge(from, to, y, width = 5, thickness = 0.3) {
+export function createBridge(from, to, y, width = 7, thickness = 0.3) {
   const dx = to.x - from.x;
   const dz = to.z - from.z;
   const length = Math.sqrt(dx * dx + dz * dz);

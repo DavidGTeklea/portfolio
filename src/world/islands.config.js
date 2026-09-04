@@ -17,7 +17,7 @@ export const islands = [
   },
   {
     id: 'experience',
-    position: { x: 0, z: -32 },
+    position: { x: 0, z: -26 },
     topRadius: 10,
     rockHeight: 5,
     grassHeight: 1,
@@ -29,7 +29,7 @@ export const islands = [
   },
   {
     id: 'education',
-    position: { x: 30, z: 0 },
+    position: { x: 26, z: 0 },
     topRadius: 7,
     rockHeight: 4,
     grassHeight: 1,
@@ -40,7 +40,7 @@ export const islands = [
   },
   {
     id: 'projects',
-    position: { x: -28, z: 0 },
+    position: { x: -26, z: 0 },
     topRadius: 6,
     rockHeight: 4,
     grassHeight: 1,
@@ -51,7 +51,7 @@ export const islands = [
   },
   {
     id: 'contact',
-    position: { x: 0, z: 30 },
+    position: { x: 0, z: 26 },
     topRadius: 7,
     rockHeight: 4,
     grassHeight: 1,
