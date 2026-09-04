@@ -1,27 +1,23 @@
 import * as THREE from 'three';
-import { clamp } from '../utils/math.js';
 
-const UP = new THREE.Vector3(0, 1, 0);
 const DOWN = new THREE.Vector3(0, -1, 0);
-const FORWARD = new THREE.Vector3();
-const RIGHT = new THREE.Vector3();
-const MOVE = new THREE.Vector3();
 const RAY_ORIGIN = new THREE.Vector3();
 
-// Camera-relative WASD movement with a downward raycast for ground snapping —
-// walking onto an island/bridge just works as long as its top surface is in
-// groundMeshes, with no physics engine needed.
+// Tank-style controls: A/D turn the character, W/S move along whichever way
+// it's currently facing. Movement never depends on the camera's orientation
+// (and the camera, in turn, just trails the character's facing) — avoiding
+// the feedback loop you'd get if movement were derived from a camera that
+// itself derives its orientation from the character it's following.
 export class PlayerController {
-  constructor({ model, mixer, clips, camera, keys, groundMeshes }) {
+  constructor({ model, mixer, clips, keys, groundMeshes }) {
     this.model = model;
     this.mixer = mixer;
     this.clips = clips;
-    this.camera = camera;
     this.keys = keys;
     this.groundMeshes = groundMeshes;
 
     this.speed = 4.5;
-    this.turnRate = 12;
+    this.turnSpeed = 2.6; // radians/sec
 
     this.raycaster = new THREE.Raycaster();
     this.raycaster.far = 5;
@@ -50,37 +46,24 @@ export class PlayerController {
 
   update(delta) {
     const { forward, back, left, right } = this.keys;
-    const moving = forward || back || left || right;
 
-    this.camera.getWorldDirection(FORWARD);
-    FORWARD.y = 0;
-    FORWARD.normalize();
-    RIGHT.crossVectors(FORWARD, UP);
+    if (left) this.model.rotation.y += this.turnSpeed * delta;
+    if (right) this.model.rotation.y -= this.turnSpeed * delta;
 
-    MOVE.set(0, 0, 0);
-    if (forward) MOVE.add(FORWARD);
-    if (back) MOVE.sub(FORWARD);
-    if (right) MOVE.add(RIGHT);
-    if (left) MOVE.sub(RIGHT);
+    const moveAmount = (forward ? 1 : 0) - (back ? 1 : 0);
+    const moving = moveAmount !== 0;
 
-    if (MOVE.lengthSq() > 0) {
-      MOVE.normalize();
-      const step = MOVE.clone().multiplyScalar(this.speed * delta);
-      const nextX = this.model.position.x + step.x;
-      const nextZ = this.model.position.z + step.z;
+    if (moving) {
+      const heading = this.model.rotation.y;
+      const step = this.speed * delta * moveAmount;
+      const nextX = this.model.position.x + Math.sin(heading) * step;
+      const nextZ = this.model.position.z + Math.cos(heading) * step;
       const groundY = this._groundHeightAt(nextX, nextZ, this.model.position.y);
 
       if (groundY !== null) {
         this.model.position.x = nextX;
         this.model.position.z = nextZ;
         this.model.position.y = groundY;
-
-        const targetAngle = Math.atan2(MOVE.x, MOVE.z);
-        this.model.rotation.y = this._lerpAngle(
-          this.model.rotation.y,
-          targetAngle,
-          clamp(delta * this.turnRate, 0, 1)
-        );
       }
       // groundY === null means the step would walk off the edge — cancel it,
       // same effect as bumping into an invisible wall.
@@ -88,12 +71,5 @@ export class PlayerController {
 
     this._playClip(moving ? 'walk' : 'idle');
     this.mixer.update(delta);
-  }
-
-  _lerpAngle(a, b, t) {
-    let diff = b - a;
-    while (diff > Math.PI) diff -= Math.PI * 2;
-    while (diff < -Math.PI) diff += Math.PI * 2;
-    return a + diff * t;
   }
 }

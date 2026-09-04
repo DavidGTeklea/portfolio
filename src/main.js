@@ -44,21 +44,20 @@ async function initScene() {
 
   const { model, mixer, clips } = await loadCharacter(undefined, loadingManager);
   const aboutIsland = islandsById.get('about');
-  model.position.set(aboutIsland.position.x, aboutIsland.position.y, aboutIsland.position.z + 3);
+  model.position.set(aboutIsland.position.x, aboutIsland.position.y, aboutIsland.position.z);
+  model.rotation.y = Math.PI;
   scene.add(model);
 
   const controller = new PlayerController({
     model,
     mixer,
     clips,
-    camera,
     keys,
     groundMeshes,
   });
 
-  camera.position.set(model.position.x, model.position.y + 4, model.position.z + 7);
-  camera.lookAt(model.position);
   const followCamera = new FollowCamera(camera);
+  followCamera.snapTo(model.position, model.rotation.y);
 
   const panelManager = new PanelManager({
     landmarks,
@@ -73,7 +72,7 @@ async function initScene() {
   const loop = createLoop(renderer, scene, camera, [
     (delta) => {
       controller.update(delta);
-      followCamera.update(delta, model.position);
+      followCamera.update(delta, model.position, model.rotation.y);
       panelManager.update(model.position);
     },
   ]);
